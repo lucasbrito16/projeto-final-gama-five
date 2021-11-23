@@ -4,7 +4,7 @@ provider "aws" {
 
 resource "aws_instance" "dev_img_deploy_jenkins" {
   subnet_id = "subnet-03b5a698df15b26ee"
-  ami= "ami-035bebdd93770d11c"
+  ami= "ami-0e66f5495b4efdd0f"
   instance_type = "t2.medium" 
   key_name = "kp-gamafive"
   associate_public_ip_address = true
