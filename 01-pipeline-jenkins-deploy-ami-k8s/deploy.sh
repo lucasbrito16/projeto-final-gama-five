@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /var/lib/jenkins/workspace/PipelineGamaFive/01-pipeline-jenkins-deploy-ami-k8s/00-terraform
+cd 01-pipeline-jenkins-deploy-ami-k8s/00-terraform
 terraform init
 terraform apply -auto-approve
 
