@@ -49,12 +49,12 @@
         priv: "*.*:ALL,GRANT"
         state: present
 
-    - name: Reload privilege tables
-      become: yes
-      command: 'mysql -ne "{{ item }}"'
-      with_items:
-       - FLUSH PRIVILEGES
-      changed_when: False
+    # - name: Reload privilege tables
+    #   become: yes
+    #   command: 'mysql -ne "{{ item }}"'
+    #   with_items:
+    #    - FLUSH PRIVILEGES
+    #   changed_when: False
 
     - name: "Criando senha root mysql"
       become: yes
@@ -65,12 +65,12 @@
         priv: "*.*:ALL,GRANT"
         state: present
 
-    - name: Reload privilege tables
-      become: yes
-      command: 'mysql -ne "{{ item }}"'
-      with_items:
-       - FLUSH PRIVILEGES
-      changed_when: False
+    # - name: Reload privilege tables
+    #   become: yes
+    #   command: 'mysql -ne "{{ item }}"'
+    #   with_items:
+    #    - FLUSH PRIVILEGES
+    #   changed_when: False
 
     - name: "Cria o banco de dados MySQL"
       mysql_db:
