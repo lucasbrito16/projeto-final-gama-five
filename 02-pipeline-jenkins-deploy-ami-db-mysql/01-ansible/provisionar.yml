@@ -16,7 +16,7 @@
         - python3-mysqldb
 
     - name: Adicionar no bashrc
-      lineinfile: dest=~/.bashrc line='export ROOT=root && export PASSWORD=Senha&12_torne00 && export DATABASE=treinamento_database' state=present
+      lineinfile: dest=~/.bashrc line='export ROOT=root && export PASSWORD=Senha&12_torne00 && export DATABASE=treinamento_database && export USER=user' state=present
 
     - name: Aplicar o bashrc
       shell: source ~/.bashrc
@@ -32,7 +32,7 @@
     - name: "Criando senha root mysql"
       become: yes
       mysql_user:
-        name: "{{ lookup('env', 'ROOT') }}"
+        name: "{{ lookup('env', 'USER') }}"
         host: localhost
         password: "{{ lookup('env', 'PASSWORD') }}"
         priv: "*.*:ALL,GRANT"
