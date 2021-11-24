@@ -7,13 +7,19 @@ pipeline {
                 git url: 'https://github.com/Marianaajpereira/projeto-final-gama-five', branch: 'master'
             }
         }
-        stage('Build EC2') {
+        stage('Build terraform') {
             steps {
                 sh "chmod +x -R ${env.WORKSPACE}"
-                sh "01-pipeline-jenkins-deploy-ami-k8s/deploy.sh"
+                sh "01-pipeline-jenkins-deploy-ami-k8s/deploy_terraform.sh"
             }
         }
-        stage('Test Nginx') {
+        stage('Build ansible') {
+            steps {
+                sh "chmod +x -R ${env.WORKSPACE}"
+                sh "01-pipeline-jenkins-deploy-ami-k8s/deploy_ansible.sh"
+            }
+        }
+        stage('Test k8s') {
             steps {
                 sh "01-pipeline-jenkins-deploy-ami-k8s/test.sh"
             }
