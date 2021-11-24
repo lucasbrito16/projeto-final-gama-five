@@ -40,21 +40,14 @@
         name: mysql
         state: started
 
-    # - name: "Criando senha root mysql"
-    #   become: yes
-    #   mysql_user:
-    #     name: "{{ lookup('env', 'USER') }}"
-    #     host: "%"
-    #     password: "{{ lookup('env', 'PASSWORD') }}"
-    #     priv: "*.*:ALL,GRANT"
-    #     state: present
-
-    # - name: Reload privilege tables
-    #   become: yes
-    #   command: 'mysql -ne "{{ item }}"'
-    #   with_items:
-    #    - FLUSH PRIVILEGES
-    #   changed_when: False
+    - name: "Criando senha root mysql"
+      become: yes
+      mysql_user:
+        name: "{{ lookup('env', 'USER') }}"
+        host: "%"
+        password: "{{ lookup('env', 'PASSWORD') }}"
+        priv: "*.*:ALL,GRANT"
+        state: present
 
     # - name: "Criando senha root mysql"
     #   become: yes
@@ -65,34 +58,21 @@
     #     priv: "*.*:ALL,GRANT"
     #     state: present
 
-    # - name: "Adicionando root .my.cnf" 
-    #   template: src=root.my.cnf.j2 dest=/root/.my.cnf mode=0600
-
-    # - name: "Reload privilege tables"
-    #   command: 'mysql -ne "{{ item }}"'
-    #   with_items:
-    #     - FLUSH PRIVILEGES
-    #   changed_when: False
-
-    # - name: "Cria o banco de dados MySQL"
-    #   mysql_db:
-    #     name: "{{ lookup('env', 'DATABASE') }}"
-    #     login_user: "{{ lookup('env', 'USER') }}"
-    #     login_password: "{{ lookup('env', 'PASSWORD') }}"
-    #     state: present
-
-    - name: "Criando senha root mysql"
-      become: yes
-      mysql_user:
-        name: "{{ lookup('env', 'USER') }}"
-        host: all
-        password: "{{ lookup('env', 'PASSWORD') }}"
-        priv: "*.*:ALL,GRANT"
+    - name: "Cria o banco de dados MySQL"
+      mysql_db:
+        name: "{{ lookup('env', 'DATABASE') }}"
+        login_user: "{{ lookup('env', 'USER') }}"
+        login_password: "{{ lookup('env', 'PASSWORD') }}"
         state: present
 
     - name: "Alterar bind do mysql"
       become: yes
       shell: "cd /etc/mysql/mysql.conf.d && sed -i '31s/.*/bind-address=0.0.0.0/' mysqld.cnf && sed -i '32s/.*/mysqlx-bind-address=0.0.0.0/' mysqld.cnf && /etc/init.d/mysql restart"
+
+    - name: "Liberar acesso do root para qualquer host"
+      become: yes
+      shell: "mysql -u root -p'root' db_dbname < mysql.txt"
+
 
 
     

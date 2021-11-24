@@ -1,0 +1,2 @@
+create user 'root'@'%' identified with mysql_native_password by 'root'; 
+grant all privileges on *.* to 'root'@'%';
