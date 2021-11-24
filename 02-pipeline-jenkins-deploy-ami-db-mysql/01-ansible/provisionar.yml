@@ -75,13 +75,13 @@
     - name: "Criando senha root mysql"
       mysql_user: 
         name: "{{ lookup('env', 'USER') }}"
-        host:     "{{ item }}"
+        host:    localhost
         password: "{{ lookup('env', 'PASSWORD') }}"
         priv: "*.*:ALL,GRANT"
         state: present
-      with_items:
-        - localhost
-        # - "%"
+      # with_items:
+      #   - localhost
+      #   # - "%"
 
     - name: "Adicionando root .my.cnf" 
       template: src=root.my.cnf.j2 dest=/root/.my.cnf mode=0600
