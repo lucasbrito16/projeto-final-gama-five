@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone repo') {
+            steps {
+                git url: 'https://github.com/Marianaajpereira/projeto-final-gama-five', branch: 'master'
+            }
+        }
+        stage('Build terraform') {
+            steps {
+                sh "chmod +x -R ${env.WORKSPACE}"
+                sh "02-pipeline-jenkins-deploy-ami-db-mysql/deploy_terraform.sh"
+            }
+        }
+        stage('Build ansible') {
+            steps {
+                sh "chmod +x -R ${env.WORKSPACE}"
+                sh "02-pipeline-jenkins-deploy-ami-db-mysql/deploy_ansible.sh"
+            }
+        }
+        stage('Test db') {
+            steps {
+                sh "02-pipeline-jenkins-deploy-ami-db-mysql/test.sh"
+            }
+        }
+        stage('Build AMI') {
+            steps {
+                sh "02-pipeline-jenkins-deploy-ami-db-mysql/package-ami.sh"
+            }
+        }
+        stage('Destroy Test db') {
+            steps {
+                sh "02-pipeline-jenkins-deploy-ami-db-mysql/destroy.sh"
+            }
+        }
+    }
+}
