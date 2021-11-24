@@ -13,6 +13,7 @@
       become: yes # roda com sudo
       with_items:
         - mysql-server
+        - python3-mysqldb
 
     - name: Adicionar no bashrc
       lineinfile: dest=~/.bashrc line='export ROOT=root && export PASSWORD=Senha&12_torne00 && export DATABASE=treinamento_database' state=present
