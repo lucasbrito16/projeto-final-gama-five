@@ -1,4 +1,9 @@
 - hosts: all
+  environment:
+    DATABASE_URL: "mysql://localhost:3306/{{ lookup('env', 'DATABASE') }}?useTimezone=true&serverTimezone=UTC"
+    PASSWORD: "{{ lookup('env', 'PASSWORD') }}"
+    USER: "{{ lookup('env', 'USER') }}"
+    
   tasks:
     - name: "Roda: sudo apt-get update"
       become: true
@@ -15,17 +20,14 @@
         - mysql-server
         - python3-mysqldb
 
-    - name: Adicionar ROOT no bashrc
-      lineinfile: dest=~/.bashrc line='export ROOT=root' state=present
-
     - name: Adicionar USER no bashrc
-      lineinfile: dest=~/.bashrc line='export MYSQL_USER=user' state=present
+      lineinfile: dest=~/.bashrc line='export USER={{ lookup('env', 'USER') }}' state=present
 
     - name: Adicionar PASSWORD no bashrc
-      lineinfile: dest=~/.bashrc line='export PASSWORD=Senha&12_torne00' state=present
+      lineinfile: dest=~/.bashrc line='export PASSWORD={{ lookup('env', 'PASSWORD') }}' state=present
 
-    - name: Adicionar DATABASE no bashrc
-      lineinfile: dest=~/.bashrc line='export DATABASE=treinamento_database' state=present
+    - name: Adicionar DATABASE_URL no bashrc
+      lineinfile: dest=~/.bashrc line='export DATABASE_URL="mysql://localhost:3306/{{ lookup('env', 'DATABASE') }}?useTimezone=true&serverTimezone=UTC"' state=present
 
     - name: Aplicar o bashrc
       shell: source ~/.bashrc
