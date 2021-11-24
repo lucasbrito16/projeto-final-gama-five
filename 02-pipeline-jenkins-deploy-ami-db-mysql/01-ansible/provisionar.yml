@@ -62,8 +62,11 @@
     - name: "Alterar bind do mysql"
       shell: |
           sudo su -
+          echo "passou aqui1"
           cd /etc/mysql/mysql.conf.d
+          echo "passou aqui2"
           sed -i '31s/.*/bind-address=0.0.0.0/' mysqld.cnf
+          echo "passou aqui3"
           sed -i '32s/.*/mysqlx-bind-address=0.0.0.0/' mysqld.cnf
 
     
