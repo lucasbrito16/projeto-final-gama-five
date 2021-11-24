@@ -1,0 +1,61 @@
+- hosts: all
+  tasks:
+    - name: "Roda: sudo apt-get update"
+      become: true
+      apt:
+        upgrade: yes
+        update_cache: yes
+
+    - name: "Instala pacotes"
+      apt:
+        name: "{{ item }}"
+        state: latest
+      become: yes # roda com sudo
+      with_items:
+        - mysql-server
+
+    - name: Adicionar no bashrc
+      lineinfile: dest=~/.bashrc line='export ROOT=root && export PASSWORD=Senha&12_torne00 && export DATABASE=treinamento_database' state=present
+
+    - name: Aplicar o bashrc
+      shell: source ~/.bashrc
+      args:
+        executable: /bin/bash   
+        
+    - name: "Levanta serviço do mysql"
+      become: yes
+      service:
+        name: mysql
+        state: started
+
+    - name: "Criando senha root mysql"
+      become: yes
+      mysql_user:
+        name: "{{ lookup('env', 'ROOT') }}"
+        host: localhost
+        password: "{{ lookup('env', 'PASSWORD') }}"
+        priv: "*.*:ALL,GRANT"
+        state: present
+  
+    - name: "Cria o banco de dados MySQL"
+      mysql_db:
+        name: "{{ lookup('env', 'DATABASE') }}"
+        login_user: "{{ lookup('env', 'ROOT') }}"
+        login_password: "{{ lookup('env', 'PASSWORD') }}"
+        state: present
+    
+    # - name: "Alterar bind do mysql"    
+
+
+
+    # - name: "Copia dump mysql para servidor"
+    #   copy:
+    #     src: "sql/db_backup.sql"
+    #     dest: "/home/ubuntu/"
+    #   become: yes
+
+    # - name: "Restore dump mysql"
+    #   shell: "mysql -u {{ lookup('env', 'USER') }} -p'{{ lookup('env', 'PASSWORD') }}' {{ lookup('env', 'DATABASE') }} < /home/ubuntu/db_backup.sql"
+
+    
+    
