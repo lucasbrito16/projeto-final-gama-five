@@ -56,8 +56,15 @@
     #     login_password: "{{ lookup('env', 'PASSWORD') }}"
     #     state: present
 
+    # - name: "Alterar bind do mysql"
+    #   shell: "sudo su - && cd /etc/mysql/mysql.conf.d && sed -i '31s/.*/bind-address=0.0.0.0/' mysqld.cnf && sed -i '32s/.*/mysqlx-bind-address=0.0.0.0/' mysqld.cnf"
+
     - name: "Alterar bind do mysql"
-      shell: "sudo su - && cd /etc/mysql/mysql.conf.d && sed -i '31s/.*/bind-address=0.0.0.0/' mysqld.cnf && sed -i '32s/.*/mysqlx-bind-address=0.0.0.0/' mysqld.cnf"
+      shell: |
+          sudo su -
+          cd /etc/mysql/mysql.conf.d
+          sed -i '31s/.*/bind-address=0.0.0.0/' mysqld.cnf
+          sed -i '32s/.*/mysqlx-bind-address=0.0.0.0/' mysqld.cnf
 
     
     
