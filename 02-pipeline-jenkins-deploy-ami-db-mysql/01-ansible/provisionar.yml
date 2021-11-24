@@ -32,7 +32,7 @@
     - name: "Criando senha root mysql"
       become: yes
       mysql_user:
-        name: "{{ lookup('env', 'USER') }}"
+        name: "{{ lookup('env', 'ROOT') }}"
         host: localhost
         password: "{{ lookup('env', 'PASSWORD') }}"
         priv: "*.*:ALL,GRANT"
@@ -40,7 +40,7 @@
   
     - name: "Cria o banco de dados MySQL"
       mysql_db:
-        name: "{{ lookup('env', 'DATABASE') }}"
+        name: "{{ lookup('env', 'USER') }}"
         login_user: "{{ lookup('env', 'ROOT') }}"
         login_password: "{{ lookup('env', 'PASSWORD') }}"
         state: present
