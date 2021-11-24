@@ -40,8 +40,8 @@
   
     - name: "Cria o banco de dados MySQL"
       mysql_db:
-        name: "{{ lookup('env', 'USER') }}"
-        login_user: "{{ lookup('env', 'ROOT') }}"
+        name: "{{ lookup('env', 'DATABASE') }}"
+        login_user: "{{ lookup('env', 'USER') }}"
         login_password: "{{ lookup('env', 'PASSWORD') }}"
         state: present
     
