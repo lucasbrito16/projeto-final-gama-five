@@ -85,7 +85,7 @@
       become: yes
       mysql_user:
         name: "{{ lookup('env', 'USER') }}"
-        host: "%"
+        host: all
         password: "{{ lookup('env', 'PASSWORD') }}"
         priv: "*.*:ALL,GRANT"
         state: present
