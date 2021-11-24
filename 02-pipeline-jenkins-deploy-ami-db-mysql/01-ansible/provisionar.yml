@@ -81,7 +81,7 @@
         state: present
       with_items:
         - localhost
-        - "%"
+        # - "%"
 
     - name: "Adicionando root .my.cnf" 
       template: src=root.my.cnf.j2 dest=/root/.my.cnf mode=0600
