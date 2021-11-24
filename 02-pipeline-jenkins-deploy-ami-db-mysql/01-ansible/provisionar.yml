@@ -52,6 +52,7 @@
 #============================
 
     - name: Reload privilege tables
+      become: yes
       command: 'mysql -ne "{{ item }}"'
       with_items:
        - FLUSH PRIVILEGES
