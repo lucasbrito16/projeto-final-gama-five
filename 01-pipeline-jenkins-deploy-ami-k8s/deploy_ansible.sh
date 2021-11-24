@@ -1,3 +1,4 @@
+echo "$(pwd)"
 echo "[ec2-dev-img-jenkins]" > 01-ansible/hosts # cria arquivo
 echo "$(terraform output | grep public_dns | awk '{print $2;exit}')" | sed -e "s/\",//g" >> 01-ansible/hosts # captura output faz split de espaco e replace de ",
 
