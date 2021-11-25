@@ -69,9 +69,9 @@
       become: yes
       shell: "cd /etc/mysql/mysql.conf.d && sed -i '31s/.*/bind-address=0.0.0.0/' mysqld.cnf && sed -i '32s/.*/mysqlx-bind-address=0.0.0.0/' mysqld.cnf && /etc/init.d/mysql restart"
 
-    - name: "Liberar acesso do root para qualquer host"
-      become: yes
-      shell: "mysql -u root -p'root' db_dbname < mysql.txt"
+    # - name: "Liberar acesso do root para qualquer host"
+    #   become: yes
+    #   shell: "mysql -u root -p'root' db_dbname < mysql.txt"
 
 
 
