@@ -44,15 +44,20 @@
     - name: "Flush privileges"
       #become: yes
       shell: "mysql -u root -p'root' -e 'flush privileges'"
-        
-    - name: "Criando senha root mysql"
-      become: yes
-      mysql_user:
-        name: "{{ lookup('env', 'USER') }}"
-        host: "%"
-        password: "{{ lookup('env', 'PASSWORD') }}"
-        priv: "*.*:ALL,GRANT"
-        state: present
+
+    - name: "Liberando acesso para qualquer ip com o usuario root"
+      #become: yes
+      shell: "mysql -u root -p'root' -e 'create user 'root'@'%' identified with mysql_native_password by 'root'' && mysql -u root -p'root' -e 'grant all privileges on *.* to 'root'@'%''" 
+
+
+    # - name: "Criando senha root mysql"
+    #   become: yes
+    #   mysql_user:
+    #     name: "{{ lookup('env', 'USER') }}"
+    #     host: "%"
+    #     password: "{{ lookup('env', 'PASSWORD') }}"
+    #     priv: "*.*:ALL,GRANT"
+    #     state: present
 
     # - name: "Criando senha root mysql"
     #   become: yes
