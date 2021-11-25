@@ -6,7 +6,7 @@ echo $uri
 
 ssh -i /var/lib/jenkins/.ssh/kp-gamafive.pem ubuntu@$uri -oStrictHostKeyChecking=no << EOF
 echo \$(pwd)
-version=\$(kubectl version)
+version=\$(mysql -V)
 echo "\$version"
 if [[ ! -z "\$version" ]];
 then 
